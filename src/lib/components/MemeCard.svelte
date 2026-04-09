@@ -29,9 +29,13 @@
 	function isImageUrl(url: string | null): boolean {
 		if (!url) return false;
 		const lower = url.toLowerCase();
-		return /\.(jpg|jpeg|png|gif|webp)(\?.*)?$/.test(lower) ||
+		return /\.(jpg|jpeg|png|gif|webp|svg)(\?.*)?$/.test(lower) ||
 			lower.includes('i.redd.it') ||
-			lower.includes('i.imgur.com');
+			lower.includes('i.imgur.com') ||
+			lower.includes('pictrs/image') ||
+			lower.includes('substackcdn.com/image') ||
+			lower.includes('imgs.xkcd.com') ||
+			lower.includes('media.tenor.com');
 	}
 </script>
 
