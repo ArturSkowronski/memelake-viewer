@@ -25,12 +25,24 @@
 		if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
 		return n.toString();
 	}
+
+	function isImageUrl(url: string | null): boolean {
+		if (!url) return false;
+		const lower = url.toLowerCase();
+		return /\.(jpg|jpeg|png|gif|webp)(\?.*)?$/.test(lower) ||
+			lower.includes('i.redd.it') ||
+			lower.includes('i.imgur.com');
+	}
 </script>
 
 <div class="meme-card" class:focused>
-	{#if meme.url}
+	{#if isImageUrl(meme.url)}
 		<div class="meme-image">
 			<img src={meme.url} alt={stripPrefix(meme.title)} loading="lazy" />
+		</div>
+	{:else if meme.url}
+		<div class="meme-link">
+			<a href={meme.url} target="_blank" rel="noopener">{meme.url}</a>
 		</div>
 	{/if}
 	<div class="meme-info">
@@ -123,6 +135,23 @@
 		border-radius: 4px;
 		font-size: 0.8rem;
 		font-weight: 500;
+	}
+
+	.meme-link {
+		padding: 0.75rem 1.25rem;
+		background: #111;
+		border-bottom: 1px solid #2a2a2a;
+	}
+
+	.meme-link a {
+		color: #4ecdc4;
+		font-size: 0.85rem;
+		word-break: break-all;
+		text-decoration: none;
+	}
+
+	.meme-link a:hover {
+		text-decoration: underline;
 	}
 
 	.score {
